@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  nest_starter_postgres:
+  url_shortener_postgres:
     image: postgres:alpine
-    container_name: nest_starter_postgres
+    container_name: url_shortener_postgres
     restart: always
     env_file:
       - .env
@@ -13,20 +13,20 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - nest_starter_postgres_data:/var/lib/postgresql/data
+      - url_shortener_postgres_data:/var/lib/postgresql/data
   
-  nest_starter_redis:
+  url_shortener_redis:
     image: redis:alpine
-    container_name: nest_starter_redis
+    container_name: url_shortener_redis
     ports:
       - '6379:6379'
     volumes:
-      - nest_starter_redis_data:/data
+      - url_shortener_redis_data:/data
 
 networks:
   default:
     name: nestjs_starter
 
 volumes:
-  nest_starter_postgres_data:
-  nest_starter_redis_data:
+  url_shortener_postgres_data:
+  url_shortener_redis_data:

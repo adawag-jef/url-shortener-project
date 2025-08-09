@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { DatabaseService } from 'src/database/database.service';
+import { UidService } from '../../services/uid/uid.service';
 import { CreateUrlDto } from './dto/create-url.dto';
 import { UpdateUrlDto } from './dto/update-url.dto';
-import { UidService } from '../../services/uid/uid.service';
-import { DatabaseService } from 'src/database/database.service';
-import { ConfigService } from '@nestjs/config';
-import { Url } from '@prisma/client';
 
 @Injectable()
 export class UrlService {
@@ -43,11 +42,16 @@ export class UrlService {
     });
   }
 
-  update(url: Url, updateUrlDto: UpdateUrlDto) {
-    return `This action updates a #${url.id} url`;
+  async update(id: number, updateUrlDto: UpdateUrlDto) {
+    return await this.databaseService.url.update({
+      where: { id },
+      data: updateUrlDto,
+    });
   }
 
-  remove(url: Url) {
-    return `This action removes a #${url.id} url`;
+  async remove(id: number) {
+    return await this.databaseService.url.delete({
+      where: { id },
+    });
   }
 }
